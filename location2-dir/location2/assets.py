@@ -1,9 +1,9 @@
-from cowsay import main
+from dagster import asset, AssetKey
 
-from dagster import asset
-from shared import shared_function
+@asset(key_prefix=["source","netsuite"])
+def fx_rates():
+    pass
 
-@asset
-def asset2(context):
-    context.log.info(shared_function())
-    context.log.info(f"Cowsay version {main.__version__}")
+@asset(deps=[AssetKey(["fx_rates"])])
+def downstream_asset():
+    pass
